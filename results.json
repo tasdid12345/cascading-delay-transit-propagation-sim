@@ -1,0 +1,32 @@
+{
+  "question": "Does a gradient-boosting model using upstream stop delays and the leading vehicle's delay predict downstream transit delays better than a standard per-vehicle travel-time regression on a simulated bus line?",
+  "method": "Numpy simulation of one bus route with delay propagation, headway recovery, peaks and noise; time-ordered train/test split by day; baseline linear regression vs grouped-CV-tuned LightGBM.",
+  "dataset": {
+    "name": "Simulated single bus route (numpy, generated in analysis.py)",
+    "source_url": "generated in analysis.py (no download)",
+    "n_rows": 172800,
+    "n_train": 138240,
+    "n_test": 34560,
+    "same_as_paper": false,
+    "baseline_is_papers_method": false
+  },
+  "metric_name": "MAE of downstream arrival delay (minutes)",
+  "higher_is_better": false,
+  "baseline": "Per-vehicle linear regression of downstream arrival delay on the vehicle's own last observed delay and scheduled time at the target stop.",
+  "improved": "LightGBM regressor (CV-tuned on training days) adding delays at all upstream observed stops, leader delays and headways at observed stops, stop index and time of day.",
+  "metrics": {
+    "baseline_score": 1.5069798525228784,
+    "improved_score": 1.3016131840166123,
+    "improvement": 0.20536666850626606,
+    "baseline_score_std": 0.0,
+    "improved_score_std": 0.0008665421926951666,
+    "baseline_rmse": 1.9805284472094835,
+    "improved_rmse": 1.692990131475989,
+    "baseline_f1": 0.22329511164755583,
+    "improved_f1": 0.4228544403351499,
+    "cv_mae_best": 1.3145314378887945,
+    "best_num_leaves": 15,
+    "best_n_estimators": 200
+  },
+  "notes": "Simulated data, so results reflect the simulator's assumptions, not a real transit agency. Leader delays are used only at observed stops. Baseline is deterministic; improved is averaged over LightGBM seeds 42-44. Late flag = delay above 3 minutes. Single simulated dataset (seed 42)."
+}
