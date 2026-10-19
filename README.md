@@ -19,6 +19,29 @@ python analysis.py
 
 Results: results are written to `results.json` (and `figures/mae_comparison.png`).
 
+## Results (latest run)
+
+On a simulated single-bus-route dataset (172,800 rows, time-ordered day split), the per-vehicle linear regression baseline reached 1.51 minutes MAE for downstream arrival delay, while the LightGBM model using upstream stop and leader delays reached 1.30 minutes on the same held-out test set.
+
+| Metric | Value |
+|---|---|
+| baseline_score | 1.507 |
+| improved_score | 1.302 |
+| improvement | 0.2054 |
+| baseline_score_std | 0 |
+| improved_score_std | 0.0008665 |
+| baseline_rmse | 1.981 |
+| improved_rmse | 1.693 |
+| baseline_f1 | 0.2233 |
+| improved_f1 | 0.4229 |
+| cv_mae_best | 1.315 |
+| best_num_leaves | 15 |
+| best_n_estimators | 200 |
+
+Run on 2026-10-19. Full output: [results.json](results.json) · [run.log](run.log)
+
+Notes: Simulated data, so results reflect the simulator's assumptions, not a real transit agency. Leader delays are used only at observed stops. Baseline is deterministic; improved is averaged over LightGBM seeds 42-44. Late flag = delay above 3 minutes. Single simulated dataset (seed 42).
+
 ## Reference
 
 This project is motivated by the following paper:
